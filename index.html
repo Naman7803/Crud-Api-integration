@@ -4,10 +4,124 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="./output.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    .remove-arrow::-webkit-inner-spin-button,
+        .remove-arrow::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .remove-arrow {
+            -moz-appearance: textfield;
+        }
+  </style>
 </head>
 <body>
-  <h1 class="text-3xl font-bold underline text-amber-300">
-    Hello world!
-  </h1>
+  <div id="loader" class="flex-col  hidden gap-4 w-full h-screen items-center justify-center">
+    <div class="w-28 h-28 border-8 text-blue-400 text-4xl animate-spin border-gray-300 flex items-center justify-center border-t-blue-400 rounded-full">
+        <svg viewBox="0 0 24 24" fill="currentColor" height="1em" width="1em" class="animate-ping">
+        <path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.337 6.182 14.976 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.337 13.382 8.976 12 6.001 12z"></path>
+        </svg>
+    </div>
+  </div>
+  <div class="max-w-xs m-5 p-5 flex justify-center items-center">
+    <form id="form" class="w-full max-w-sm" method="post">
+      <div class="md:flex md:items-center mb-6">
+        <div class="md:w-1/3">
+          <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="name">
+            Name
+          </label>
+        </div>
+        <div class="md:w-2/3">
+          <input 
+            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            id="name" type="text" placeholder="Name" >
+          <div id="name-error" class="text-sm text-red-500 hidden">Name is required</div>
+        </div>
+      </div>
+
+      <div class="md:flex md:items-center mb-6">
+        <div class="md:w-1/3">
+          <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="color">
+            Color
+          </label>
+        </div>
+        <div class="md:w-2/3">
+          <input
+            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            id="color" type="color" >
+          <div id="color-error" class="text-sm text-red-500 hidden">Color is required</div>
+        </div>
+      </div>
+
+      <div class="md:flex md:items-center mb-6">
+        <div class="md:w-1/3">
+          <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="category">
+            Category
+          </label>
+        </div>
+        <div class="md:w-2/3">
+          <select name="category" id="category"  class="bg-gray-200  border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+            <option value="" disabled selected>Select field :</option>
+            <option value="mobile">Mobile</option>
+            <option value="laptop">Laptop</option>
+            <option value="tablet">Tablet</option>
+          </select>
+        <div id="category-error" class="text-sm text-red-500 hidden">Category is required</div>
+        </div>
+      </div>
+
+      <div class="md:flex md:items-center mb-6">
+        <div class="md:w-1/3">
+          <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="price">
+            Price
+          </label>
+        </div>
+        <div class="md:w-2/3">
+          <input
+            class="bg-gray-200 appearance-none remove-arrow border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            id="price" type="number" placeholder="Price" >
+          <div id="price-error" class="text-sm text-red-500 hidden">Price is required</div>
+        </div>
+      </div>
+      
+      <div class="md:flex md:items-center">
+        <div class="md:w-1/3"></div>
+        <div class="md:w-2/3">
+          <button
+            class="shadow bg-green-500 hover:bg-green-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded cursor-pointer"
+            type="submit" value="Add" id="add">Add
+          </button> 
+          <button 
+            class="shadow bg-green-500 hidden hover:bg-green-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded cursor-pointer" 
+            type="submit" value="Update" id="update">Update
+          </button>
+          <button 
+            class="shadow bg-green-500 hidden hover:bg-green-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded cursor-pointer" 
+            type="button" value="clear" id="clear">Clear
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div id="table" class="max-w-xs m-5 p-5 flex items-center">
+    <table class="border-collapse border border-black">
+      <thead>
+        <tr class="text-center">
+          <th class="border border-black px-5 py-2">Name</th>
+          <th class="border border-black px-5 py-2">Color</th>
+          <th class="border border-black px-5 py-2">Category</th>
+          <th class="border border-black px-5 py-2">Price</th>
+        </tr>
+      </thead>
+      <tbody id="display">
+      </tbody>
+    </table>
+  </div>
+
+  
+
+  <script src="index.js"></script>
 </body>
 </html>
